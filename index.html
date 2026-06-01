@@ -6,100 +6,94 @@
     <title>電気通信施工管理技士1級 一次試験 問題集</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif; background: #f0f4f8; color: #333; min-height: 100vh; }
-        header { background: linear-gradient(135deg, #1a3a5c, #2d6a9f); color: white; padding: 20px 16px; text-align: center; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic', sans-serif;
+            background: #f0f4f8; color: #333; min-height: 100vh;
+        }
+        header {
+            background: linear-gradient(135deg, #1a3a5c, #2d6a9f);
+            color: white; padding: 20px 16px; text-align: center;
+        }
         header h1 { font-size: 17px; font-weight: bold; line-height: 1.5; }
-        header p { font-size: 13px; margin-top: 5px; opacity: 0.85; }
+        header p  { font-size: 13px; margin-top: 5px; opacity: 0.85; }
+
         .container { max-width: 600px; margin: 0 auto; padding: 20px 16px; }
+
         #level-screen { text-align: center; padding: 24px 0; }
         #level-screen h2 { font-size: 20px; color: #1a3a5c; margin-bottom: 6px; }
-        #level-screen p { font-size: 13px; color: #666; margin-bottom: 28px; }
-        .level-btn { display: block; width: 100%; padding: 22px 16px; margin-bottom: 16px; border: none; border-radius: 14px; font-size: 18px; font-weight: bold; cursor: pointer; transition: transform 0.1s; }
+        #level-screen p  { font-size: 13px; color: #666; margin-bottom: 24px; }
+
+        .level-btn {
+            display: block; width: 100%; padding: 20px 16px;
+            margin-bottom: 14px; border: none; border-radius: 14px;
+            font-size: 18px; font-weight: bold; cursor: pointer;
+            transition: transform 0.1s;
+        }
         .level-btn:active { transform: scale(0.97); }
         .level-btn small { display: block; font-size: 13px; font-weight: normal; margin-top: 4px; opacity: 0.9; }
-        .level-btn.beginner { background: linear-gradient(135deg,#4CAF50,#388e3c); color:#fff; box-shadow:0 4px 14px rgba(76,175,80,.35); }
+        .level-btn.beginner     { background: linear-gradient(135deg,#4CAF50,#388e3c); color:#fff; box-shadow:0 4px 14px rgba(76,175,80,.35); }
         .level-btn.intermediate { background: linear-gradient(135deg,#FF9800,#e65100); color:#fff; box-shadow:0 4px 14px rgba(255,152,0,.35); }
+        .level-btn.advanced     { background: linear-gradient(135deg,#e53935,#b71c1c); color:#fff; box-shadow:0 4px 14px rgba(229,57,53,.35); }
+        .level-btn.random       { background: linear-gradient(135deg,#7b1fa2,#4a148c); color:#fff; box-shadow:0 4px 14px rgba(123,31,162,.35); }
+
         #quiz-screen { display: none; }
         .progress-wrap { background:#ddd; border-radius:8px; height:8px; margin-bottom:6px; }
-        .progress-bar { background:linear-gradient(90deg,#2d6a9f,#4CAF50); height:8px; border-radius:8px; transition:width .3s; }
+        .progress-bar  { background:linear-gradient(90deg,#2d6a9f,#4CAF50); height:8px; border-radius:8px; transition:width .3s; }
         .progress-text { font-size:13px; color:#666; text-align:right; margin-bottom:14px; }
-        .question-card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,.08); margin-bottom: 14px; }
-        .category-tag { display: inline-block; background: #e8f0fe; color: #2d6a9f; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; }
+
+        .question-card {
+            background: white; border-radius: 16px;
+            padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,.08); margin-bottom: 14px;
+        }
+        .category-tag {
+            display: inline-block; background: #e8f0fe; color: #2d6a9f;
+            font-size: 11px; font-weight: bold; padding: 3px 10px;
+            border-radius: 20px; margin-bottom: 12px;
+        }
         .question-text { font-size: 16px; line-height: 1.75; color: #222; }
+
         .options { margin-top: 18px; }
-        .option-btn { display: block; width: 100%; padding: 14px 16px; margin-bottom: 10px; background: white; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 15px; text-align: left; cursor: pointer; line-height: 1.5; color: #333; }
-        .option-btn.correct { background:#e8f5e9; border-color:#4CAF50; color:#2e7d32; }
-        .option-btn.wrong { background:#ffebee; border-color:#f44336; color:#c62828; }
+        .option-btn {
+            display: block; width: 100%; padding: 14px 16px; margin-bottom: 10px;
+            background: white; border: 2px solid #e0e0e0; border-radius: 10px;
+            font-size: 15px; text-align: left; cursor: pointer; line-height: 1.5;
+            transition: border-color .2s, background .2s; color: #333;
+        }
+        .option-btn.correct  { background:#e8f5e9; border-color:#4CAF50; color:#2e7d32; }
+        .option-btn.wrong    { background:#ffebee; border-color:#f44336; color:#c62828; }
         .option-btn.disabled { cursor: default; }
-        .explanation { display: none; background: #f8f9fa; border-left: 4px solid #2d6a9f; padding: 14px 16px; border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 14px; line-height: 1.75; color: #444; }
+
+        .explanation {
+            display: none; background: #f8f9fa; border-left: 4px solid #2d6a9f;
+            padding: 14px 16px; border-radius: 0 10px 10px 0;
+            margin-top: 14px; font-size: 14px; line-height: 1.75; color: #444;
+        }
         .explanation.show { display: block; }
         .explanation-title { font-weight: bold; color: #2d6a9f; margin-bottom: 6px; }
-        .next-btn { display: none; width: 100%; padding: 16px; border: none; border-radius: 12px; background: linear-gradient(135deg,#1a3a5c,#2d6a9f); color: white; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 6px; }
+
+        .next-btn {
+            display: none; width: 100%; padding: 16px; border: none; border-radius: 12px;
+            background: linear-gradient(135deg,#1a3a5c,#2d6a9f); color: white;
+            font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 6px;
+        }
         .next-btn.show { display: block; }
+
         #result-screen { display: none; text-align: center; padding: 20px 0; }
-        .result-circle { width: 140px; height: 140px; border-radius: 50%; margin: 0 auto 22px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold; }
+        .result-circle {
+            width: 140px; height: 140px; border-radius: 50%;
+            margin: 0 auto 22px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; font-weight: bold;
+        }
         .result-circle.pass { background:linear-gradient(135deg,#4CAF50,#388e3c); color:white; box-shadow:0 6px 20px rgba(76,175,80,.4); }
         .result-circle.fail { background:linear-gradient(135deg,#FF9800,#e65100); color:white; box-shadow:0 6px 20px rgba(255,152,0,.4); }
-        .result-circle .score { font-size: 36px; }
+        .result-circle .score       { font-size: 36px; }
         .result-circle .score-label { font-size: 13px; opacity: .9; }
         .result-message { font-size: 22px; font-weight: bold; color: #1a3a5c; margin-bottom: 8px; }
-        .result-sub { font-size: 14px; color: #666; margin-bottom: 28px; }
+        .result-sub     { font-size: 14px; color: #666; margin-bottom: 28px; }
         .result-actions { display: flex; flex-direction: column; gap: 12px; }
-        .btn-action { padding: 16px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; border: none; }
-        .btn-action.primary { background:linear-gradient(135deg,#1a3a5c,#2d6a9f); color:white; }
+        .btn-action {
+            padding: 16px; border-radius: 12px;
+            font-size: 16px; font-weight: bold; cursor: pointer; border: none;
+        }
+        .btn-action.primary   { background:linear-gradient(135deg,#1a3a5c,#2d6a9f); color:white; }
         .btn-action.secondary { background:white; color:#2d6a9f; border:2px solid #2d6a9f; }
-    </style>
-</head>
-<body>
-<header>
-    <h1>電気通信施工管理技士 1級</h1>
-    <p>第一次試験 問題集</p>
-</header>
-<div class="container">
-    <div id="level-screen">
-        <h2>レベルを選んでください</h2>
-        <p>各20問・解説付き</p>
-        <button class="level-btn beginner" onclick="startQuiz('beginner')">🟢 初級<small>基本用語・基礎知識の確認</small></button>
-        <button class="level-btn intermediate" onclick="startQuiz('intermediate')">🟠 中級<small>計算問題・応用・法規</small></button>
-    </div>
-    <div id="quiz-screen">
-        <div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
-        <div class="progress-text" id="progress-text"></div>
-        <div class="question-card">
-            <div class="category-tag" id="category-tag"></div>
-            <div class="question-text" id="question-text"></div>
-            <div class="options" id="options"></div>
-            <div class="explanation" id="explanation">
-                <div class="explanation-title">📝 解説</div>
-                <div id="explanation-text"></div>
-            </div>
-        </div>
-        <button class="next-btn" id="next-btn" onclick="nextQuestion()">次の問題 →</button>
-    </div>
-    <div id="result-screen">
-        <div class="result-circle" id="result-circle">
-            <div class="score" id="result-score"></div>
-            <div class="score-label">点</div>
-        </div>
-        <div class="result-message" id="result-message"></div>
-        <div class="result-sub" id="result-sub"></div>
-        <div class="result-actions">
-            <button class="btn-action primary" onclick="retryQuiz()">🔄 同じレベルをもう一度</button>
-            <button class="btn-action secondary" onclick="goHome()">🏠 レベル選択に戻る</button>
-        </div>
-    </div>
-</div>
-<script>
-const questions={beginner:[{category:'電気通信工学',question:'光ファイバーケーブルの特徴として正しいものはどれか。',options:['電磁誘導の影響を受けやすい','電気信号をそのまま伝送する','電磁誘導の影響を受けにくい','銅線より重い'],answer:2,explanation:'光ファイバーは光信号で伝送するため、電磁誘導（ノイズ）の影響を受けにくい特徴があります。また軽量・細径・広帯域という特徴もあります。'},{category:'電気通信工学',question:'デシベル（dB）の説明として正しいものはどれか。',options:['電力の絶対値を表す単位','電力比・電圧比を対数で表した単位','周波数を表す単位','電流の大きさを表す単位'],answer:1,explanation:'デシベル（dB）は電力比や電圧比を常用対数で表した相対的な単位です。電力比では dB=10log(P1/P2)、電圧比では dB=20log(V1/V2) で計算します。'},{category:'電気通信工学',question:'電気通信回線の「伝送損失」とは何か。',options:['信号レベルが増加する現象','信号レベルが減少する現象','送受信端の周波数の差','電流の変化率'],answer:1,explanation:'伝送損失とは、信号が伝送路を通過する際に信号レベルが減少する現象です。光ファイバーはdB/km単位で損失を表します。'},{category:'施工管理',question:'施工管理の「4大管理」に含まれないものはどれか。',options:['工程管理','品質管理','設計管理','安全管理'],answer:2,explanation:'施工管理の4大管理は「工程管理・品質管理・安全管理・原価管理」です。設計管理は含まれません。'},{category:'施工管理',question:'バーチャート（横線式工程表）の特徴として正しいものはどれか。',options:['各作業の関連性が明確にわかる','各作業の開始・終了時期が視覚的にわかりやすい','クリティカルパスが容易に把握できる','コンピューターがないと作成できない'],answer:1,explanation:'バーチャートは横棒グラフで各作業の期間を表します。見やすい反面、作業間の関連性やクリティカルパスの把握には向いていません。'},{category:'法規',question:'電気通信事業法の目的として正しいものはどれか。',options:['電波の公平かつ能率的な利用を確保する','電気通信事業の適正な運営を確保し利用者の利益を保護する','建設業の健全な発達を促進する','労働者の安全と健康を守る'],answer:1,explanation:'電気通信事業法は、電気通信事業の適正な運営を確保し、電気通信の健全な発達と国民の利便の確保を目的としています。'},{category:'法規',question:'建設業法における「主任技術者」の配置が必要な工事はどれか。',options:['請負金額500万円未満の軽微な工事のみ','すべての建設工事','公共工事のみ','請負金額3,000万円以上の工事のみ'],answer:1,explanation:'建設業法により、建設業者はすべての工事現場に主任技術者（または監理技術者）を配置しなければなりません。'},{category:'電気工学',question:'オームの法則の式として正しいものはどれか。',options:['V=I+R','V=I×R','V=I/R','V=I²×R'],answer:1,explanation:'オームの法則は V=I×R（電圧＝電流×抵抗）です。V(ボルト)、I(アンペア)、R(オーム)の関係を表します。'},{category:'電気通信工学',question:'無線LANの規格「IEEE 802.11ac（Wi-Fi 5）」が主に使用する周波数帯はどれか。',options:['2.4GHz帯のみ','5GHz帯のみ','900MHz帯','60GHz帯'],answer:1,explanation:'IEEE 802.11ac（Wi-Fi 5）は5GHz帯を使用します。2.4GHz帯と5GHz帯の両方に対応するのはWi-Fi 4やWi-Fi 6です。'},{category:'施工管理',question:'ヒヤリハットの説明として正しいものはどれか。',options:['死亡・重傷事故のこと','危うく事故になりそうだったが災害に至らなかった事象','軽傷事故のこと','設備の故障のこと'],answer:1,explanation:'ヒヤリハットとは危うく事故になりそうだった事象です。ハインリッヒの法則では1件の重大事故の背後に29件の軽微な事故と300件のヒヤリハットがあるとされています。'},{category:'電気通信工学',question:'IPアドレス「192.168.1.0/24」のサブネットマスクはどれか。',options:['255.0.0.0','255.255.0.0','255.255.255.0','255.255.255.128'],answer:2,explanation:'/24はサブネットマスクの上位24ビットが1であることを示します。IPv4では24ビット＝255.255.255.0に相当します。'},{category:'法規',question:'労働安全衛生法に基づき、高さ何m以上の場所での作業時に墜落防止措置が必要か。',options:['1m以上','2m以上','3m以上','5m以上'],answer:1,explanation:'労働安全衛生規則により、高さ2m以上の箇所での作業では安全帯の使用や手すりの設置など墜落防止措置が必要です。'},{category:'電気通信工学',question:'UTPケーブルとSTPケーブルの違いとして正しいものはどれか。',options:['UTPはシールドあり、STPはシールドなし','UTPはシールドなし、STPはシールドあり','UTPは光ファイバー、STPは銅線','速度の違いのみで構造は同じ'],answer:1,explanation:'UTP（Unshielded Twisted Pair）はシールドなし、STP（Shielded Twisted Pair）はシールドありのツイストペアケーブルです。STPはノイズに強い特徴があります。'},{category:'施工管理',question:'QC（品質管理）の「PDCAサイクル」の正しい順序はどれか。',options:['Plan→Check→Do→Act','Plan→Do→Check→Act','Do→Plan→Check→Act','Check→Plan→Do→Act'],answer:1,explanation:'PDCAサイクルはPlan（計画）→Do（実施）→Check（確認）→Act（改善）の順に繰り返すことで継続的な品質改善を行う手法です。'},{category:'電気工学',question:'交流電力において「力率」とは何か。',options:['有効電力と皮相電力の比','電圧と電流の比','周波数と電圧の比','無効電力と皮相電力の比'],answer:0,explanation:'力率は有効電力（W）÷皮相電力（VA）で求められます。力率が1に近いほど電力を効率よく使えています。'},{category:'電気通信工学',question:'PONシステムにおける「ONU」とは何か。',options:['局側の光通信装置','加入者側の光通信装置','光ファイバーの分岐装置','無線アクセスポイント'],answer:1,explanation:'ONU（Optical Network Unit）は加入者側（ユーザー宅）に設置される光通信装置です。局側の装置はOLT（Optical Line Terminal）と呼ばれます。'},{category:'施工管理',question:'工事着手前に作成する「施工計画書」に含まれないものはどれか。',options:['工程表','安全管理計画','完成検査報告書','品質管理計画'],answer:2,explanation:'完成検査報告書は工事完了後に作成するものです。施工計画書は着手前に工程表・安全管理計画・品質管理計画などを記載します。'},{category:'法規',question:'電波法における「不法無線局」の開設に対する罰則はどれか。',options:['5万円以下の罰金','1年以下の懲役または100万円以下の罰金','警告のみ','罰則規定はない'],answer:1,explanation:'電波法により、不法無線局（無免許）の開設は1年以下の懲役または100万円以下の罰金が科せられます。'},{category:'電気通信工学',question:'VoIPの説明として正しいものはどれか。',options:['映像信号をIP網で伝送する技術','音声をデジタル化しIP網で伝送する技術','無線通信の一規格','データの暗号化技術'],answer:1,explanation:'VoIP（Voice over Internet Protocol）は音声をデジタル変換してIP網で伝送する技術です。IP電話などに利用されています。'},{category:'施工管理',question:'作業主任者の選任が必要な作業はどれか。',options:['地上での一般清掃作業','高圧電気設備の取扱い作業','書類整理作業','資材の室内保管作業'],answer:1,explanation:'労働安全衛生法により、高圧・特別高圧電気設備の取扱い作業などの危険有害作業では作業主任者の選任が義務付けられています。'}],intermediate:[{category:'電気通信工学（計算）',question:'光ファイバー伝送路の損失が0.3dB/kmの場合、10kmの伝送損失は何dBか。',options:['0.3dB','3dB','30dB','0.03dB'],answer:1,explanation:'伝送損失=損失係数×距離=0.3dB/km×10km=3dBとなります。dBは線形に加算できます。'},{category:'電気通信工学',question:'TDM（時分割多重）とFDM（周波数分割多重）の違いとして正しいものはどれか。',options:['TDMは時間・FDMは周波数で信号を分割して多重化する','TDMは周波数・FDMは時間で分割する','どちらも同じ方式の別名称','TDMはアナログ専用・FDMはデジタル専用'],answer:0,explanation:'TDM（Time Division Multiplexing）は時間軸で、FDM（Frequency Division Multiplexing）は周波数帯域で信号を分割して多重化します。'},{category:'施工管理',question:'ネットワーク工程表（アローダイアグラム）における「クリティカルパス」とは何か。',options:['最も短い経路','最も長い経路で遅延すると工期全体が延びる','最もコストがかかる経路','安全上最も危険な工程'],answer:1,explanation:'クリティカルパスはネットワーク工程表において最長の作業経路です。この経路上の作業が遅れると工期全体が延びるため重点管理が必要です。'},{category:'法規',question:'建設業法において、下請契約の総額が何円以上の場合に「特定建設業許可」が必要か。',options:['1,000万円以上','3,000万円以上（建築は4,500万円以上）','5,000万円以上','1億円以上'],answer:1,explanation:'発注者から直接請け負った工事で、下請契約の総額が3,000万円以上（建築一式は4,500万円以上）となる場合は特定建設業許可が必要です。'},{category:'電気通信工学',question:'MIMO技術の説明として正しいものはどれか。',options:['1本のアンテナで複数の周波数を使う技術','複数の送受信アンテナを使い通信速度・品質を向上させる技術','信号を暗号化する技術','伝送距離を延長する中継技術'],answer:1,explanation:'MIMO（Multiple Input Multiple Output）は複数の送受信アンテナを同時に使用し、通信速度の向上や品質改善を実現する技術です。LTEやWi-Fiに広く採用されています。'},{category:'電気工学（計算）',question:'三相交流回路（Y結線）において、線間電圧と相電圧の関係として正しいものはどれか。',options:['線間電圧=相電圧','線間電圧=√3×相電圧','線間電圧=3×相電圧','線間電圧=相電圧/√3'],answer:1,explanation:'Y（スター）結線では線間電圧=√3×相電圧の関係があります。相電圧が200Vの場合、線間電圧は約346V（200×1.732）となります。'},{category:'施工管理',question:'品質管理における「管理図」の説明として正しいものはどれか。',options:['工程の時間的な流れを表す図','工程が統計的に安定した状態にあるかを監視するための図','作業員の配置を示す図','材料の発注量を管理する図'],answer:1,explanation:'管理図（コントロールチャート）はQC7つ道具の一つで、工程データを時系列にプロットし管理限界線と照らし合わせることで工程の異常を検出します。'},{category:'法規',question:'電波法における「技術基準適合証明（技適マーク）」の説明として正しいものはどれか。',options:['無線局の免許が不要になる証明','端末機器が電波法の技術基準に適合していることの証明','建設業者の技術力を証明するもの','電気通信事業者の認定'],answer:1,explanation:'技適マークは無線機器が電波法で定める技術基準を満たしていることを証明するものです。技適マークのない機器の日本での使用は原則禁止されています。'},{category:'電気通信工学',question:'SDHの基本速度STM-1の伝送速度はどれか。',options:['1.544Mbit/s','51.84Mbit/s','155.52Mbit/s','622.08Mbit/s'],answer:2,explanation:'SDHのSTM-1（Synchronous Transport Module level 1）の伝送速度は155.52Mbit/sです。STM-4は622.08Mbit/s、STM-16は約2.5Gbit/sとなります。'},{category:'施工管理',question:'工事現場における「新規入場者教育」の目的として最も適切なものはどれか。',options:['工事の設計内容を理解させること','現場ルール・危険箇所・緊急連絡先などを周知し安全確保を図ること','工事の原価計算をさせること','品質検査の方法を習得させること'],answer:1,explanation:'新規入場者教育は、現場に初めて入場する作業員に対して現場ルール・危険箇所・緊急連絡先・作業手順などを説明し安全な作業を確保することを目的とします。'},{category:'電気通信工学',question:'OSI参照モデルの第3層（ネットワーク層）のプロトコルはどれか。',options:['TCP','HTTP','IP','Ethernet'],answer:2,explanation:'OSI第3層（ネットワーク層）はIPが該当します。TCPは第4層（トランスポート層）、HTTPは第7層（アプリケーション層）、Ethernetは第2層（データリンク層）です。'},{category:'法規',question:'労働安全衛生法において、特定元方事業者（元請）の義務として正しいものはどれか。',options:['下請事業者の賃金を直接支払う義務','関係請負人を含めた統括的な安全衛生管理を行う義務','下請事業者の利益を保証する義務','材料をすべて支給する義務'],answer:1,explanation:'特定元方事業者（元請）は、自社および関係請負人（下請）の労働者を含めた統括安全衛生管理が義務付けられています。'},{category:'電気通信工学',question:'OTDR（光パルス試験器）の用途として正しいものはどれか。',options:['光ファイバーの伝送損失分布や断線箇所を測定する','電気ケーブルの絶縁抵抗を測定する','無線の電波強度を測定する','IPネットワークの通信速度を測定する'],answer:0,explanation:'OTDR（Optical Time Domain Reflectometer）は光ファイバーの一端から光パルスを入射し、後方散乱光を分析することで損失分布・断線箇所の距離などを測定する機器です。'},{category:'施工管理',question:'EVMにおけるSPI（スケジュール効率指数）が1.0未満を示す場合はどれか。',options:['予定より工程が進んでいる','予定通り工程が進んでいる','予定より工程が遅れている','コストが超過している'],answer:2,explanation:'SPI=EV（出来高）÷PV（計画値）です。SPI<1.0は工程が計画より遅れていることを、SPI>1.0は進んでいることを示します。'},{category:'電気工学',question:'UPS（無停電電源装置）のバッテリーを常時充電し停電時に瞬断なく給電できる方式はどれか。',options:['オフライン方式（スタンバイ方式）','オンライン方式（常時インバータ方式）','ラインインタラクティブ方式','インライン方式'],answer:1,explanation:'オンライン方式（常時インバータ方式）はバッテリーを介して常時インバータで給電するため停電時に切替時間がなく瞬断がありません。サーバーなど重要機器に適しています。'},{category:'法規',question:'電気通信工事の「監理技術者」の配置が必要な条件として正しいものはどれか。',options:['すべての下請工事','下請契約総額が3,000万円以上（建築は4,500万円以上）となる特定建設業者が施工する工事','工事金額500万円以上のすべての工事','公共工事のみ'],answer:1,explanation:'特定建設業者が元請として下請契約の総額が3,000万円以上（建築一式は4,500万円以上）となる工事では、主任技術者ではなく監理技術者を配置しなければなりません。'},{category:'電気通信工学',question:'IPv6アドレスのビット数はどれか。',options:['32ビット','64ビット','128ビット','256ビット'],answer:2,explanation:'IPv6アドレスは128ビット（16バイト）で、IPv4の32ビットに対して大幅に拡張されています。16進数8グループ（各16ビット）をコロン区切りで表記します。'},{category:'施工管理',question:'受注者が発注者に提出する「施工体制台帳」の作成義務が生じる条件はどれか。',options:['すべての工事','公共工事において下請契約を締結したとき','工事金額が1億円を超えるとき','工期が1年以上の工事'],answer:1,explanation:'建設業法により、公共工事を受注した建設業者が下請契約を締結した場合、施工体制台帳を作成し発注者に提出する義務があります。'},{category:'電気通信工学（計算）',question:'送信電力が10Wの場合、dBm（ミリワット基準）で表すと何dBmか。',options:['10dBm','30dBm','40dBm','100dBm'],answer:2,explanation:'dBm=10×log₁₀(電力mW/1mW)。10W=10,000mWなので、10×log₁₀(10,000)=10×4=40dBmとなります。'},{category:'法規',question:'電気通信工事施工管理技士1級の「第一次検定」の受験資格として正しいものはどれか。',options:['実務経験なしで受験可能（19歳以上）','学歴に応じた所定の実務経験が必要','2級合格後5年以上の実務経験が必要','年齢・経験問わず誰でも受験可能'],answer:0,explanation:'2021年度の法改正により、1級第一次検定は19歳以上であれば実務経験なしで受験可能になりました。第二次検定には所定の実務経験が必要です。'}]};
-let currentLevel='',currentQuestions=[],currentIndex=0,score=0,answered=false;
-function startQuiz(level){currentLevel=level;currentQuestions=shuffle([...questions[level]]);currentIndex=0;score=0;answered=false;document.getElementById('level-screen').style.display='none';document.getElementById('result-screen').style.display='none';document.getElementById('quiz-screen').style.display='block';showQuestion();}
-function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
-function showQuestion(){answered=false;const q=currentQuestions[currentIndex],total=currentQuestions.length;document.getElementById('progress-bar').style.width=((currentIndex/total)*100)+'%';document.getElementById('progress-text').textContent=`${currentIndex+1} / ${total} 問`;document.getElementById('category-tag').textContent=q.category;document.getElementById('question-text').textContent=q.question;const optionsDiv=document.getElementById('options');optionsDiv.innerHTML='';q.options.forEach((opt,i)=>{const btn=document.createElement('button');btn.className='option-btn';btn.textContent=`${'①②③④'[i]} ${opt}`;btn.onclick=()=>selectAnswer(i);optionsDiv.appendChild(btn);});document.getElementById('explanation').classList.remove('show');document.getElementById('next-btn').classList.remove('show');}
-function selectAnswer(selected){if(answered)return;answered=true;const q=currentQuestions[currentIndex];document.querySelectorAll('.option-btn').forEach((btn,i)=>{btn.classList.add('disabled');if(i===q.answer)btn.classList.add('correct');else if(i===selected)btn.classList.add('wrong');});if(selected===q.answer)score++;document.getElementById('explanation-text').textContent=q.explanation;document.getElementById('explanation').classList.add('show');const nextBtn=document.getElementById('next-btn');nextBtn.textContent=currentIndex+1<currentQuestions.length?'次の問題 →':'結果を見る';nextBtn.classList.add('show');}
-function nextQuestion(){currentIndex++;if(currentIndex<currentQuestions.length){showQuestion();}else{showResult();}}
-function showResult(){document.getElementById('quiz-screen').style.display='none';document.getElementById('result-screen').style.display='block';const total=currentQuestions.length,pct=Math.round((score/total)*100);const circle=document.getElementById('result-circle');document.getElementById('result-score').textContent=`${score}/${total}`;if(pct>=60){circle.className='result-circle pass';document.getElementById('result-message').textContent='合格ライン達成！ 🎉';document.getElementById('result-sub').textContent=`正解率 ${pct}%　引き続き実力を磨きましょう`;}else{circle.className='result-circle fail';document.getElementById('result-message').textContent='もう少し！ 💪';document.getElementById('result-sub').textContent=`正解率 ${pct}%　解説を確認して再挑戦しましょう`;}}
-function retryQuiz(){startQuiz(currentLevel);}
-function goHome(){document.getElementById('result-screen').style.display='none';document.getElementById('level-screen').style.display='block';}
-</script>
-</body>
-</html>
