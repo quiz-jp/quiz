@@ -107,6 +107,15 @@
             border-radius:20px; margin-bottom:20px;
         }
 
+        .quiz-nav {
+            display: flex; gap: 8px; margin-bottom: 12px;
+        }
+        .quiz-nav-btn {
+            padding: 8px 14px; border: 1px solid #ccc; border-radius: 8px;
+            background: white; font-size: 13px; cursor: pointer; color: #555;
+        }
+        #prev-btn { display: none; }
+
         .category-breakdown {
             background:#f8f9fa; border-radius:12px; padding:16px;
             margin-bottom:20px; text-align:left;
@@ -156,6 +165,10 @@
     </div>
 
     <div id="quiz-screen">
+        <div class="quiz-nav">
+            <button class="quiz-nav-btn" onclick="goHomeFromQuiz()">🏠 最初に戻る</button>
+            <button class="quiz-nav-btn" id="prev-btn" onclick="prevQuestion()">← 前の問題</button>
+        </div>
         <div class="progress-wrap">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
@@ -459,19 +472,45 @@ function showQuestion() {
     document.getElementById('category-tag').textContent  = q.category + (q._level ? '　[' + q._level + ']' : '');
     document.getElementById('question-text').textContent = q.question;
 
-    const shuffledOptions = shuffleOptions(q.options, q.answer);
+    // シャッフル済みなら再利用、初回のみシャッフル
+    if (!q._shuffled) {
+        const sd = shuffleOptions(q.options, q.answer);
+        q._shuffledOptions = sd.options;
+        q._correctIndex    = sd.correctIndex;
+        q._shuffled        = true;
+        q._selectedIndex   = null;
+        q._answered        = false;
+    }
+
     const optionsDiv = document.getElementById('options');
     optionsDiv.innerHTML = '';
-    shuffledOptions.options.forEach((opt, i) => {
+    q._shuffledOptions.forEach((opt, i) => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
         btn.textContent = '①②③④'[i] + ' ' + opt;
-        btn.onclick = () => selectAnswer(i, shuffledOptions.correctIndex);
+        if (q._answered) {
+            btn.classList.add('disabled');
+            if (i === q._correctIndex)   btn.classList.add('correct');
+            else if (i === q._selectedIndex) btn.classList.add('wrong');
+        } else {
+            btn.onclick = () => selectAnswer(i, q._correctIndex);
+        }
         optionsDiv.appendChild(btn);
     });
 
-    document.getElementById('explanation').classList.remove('show');
-    document.getElementById('next-btn').classList.remove('show');
+    if (q._answered) {
+        answered = true;
+        document.getElementById('explanation-text').textContent = q.explanation;
+        document.getElementById('explanation').classList.add('show');
+        const nextBtn = document.getElementById('next-btn');
+        nextBtn.textContent = currentIndex + 1 < total ? '次の問題 →' : '結果を見る';
+        nextBtn.classList.add('show');
+    } else {
+        document.getElementById('explanation').classList.remove('show');
+        document.getElementById('next-btn').classList.remove('show');
+    }
+
+    document.getElementById('prev-btn').style.display = currentIndex > 0 ? 'block' : 'none';
 }
 
 function shuffleOptions(options, correctIndex) {
@@ -490,6 +529,8 @@ function selectAnswer(selected, correctIndex) {
     if (answered) return;
     answered = true;
     const q = currentQuestions[currentIndex];
+    q._answered      = true;
+    q._selectedIndex = selected;
 
     document.querySelectorAll('.option-btn').forEach((btn, i) => {
         btn.classList.add('disabled');
@@ -521,6 +562,21 @@ function nextQuestion() {
         showQuestion();
     } else {
         showResult();
+    }
+}
+
+function prevQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showQuestion();
+    }
+}
+
+function goHomeFromQuiz() {
+    if (confirm('最初に戻りますか？（進捗はリセットされます）')) {
+        document.getElementById('quiz-screen').style.display  = 'none';
+        document.getElementById('level-screen').style.display = 'block';
+        updateHomeScreen();
     }
 }
 
