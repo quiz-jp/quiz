@@ -78,6 +78,14 @@
         }
         .next-btn.show { display: block; }
 
+        .skip-btn {
+            display: none; width: 100%; padding: 12px; margin-top: 10px;
+            border: 1px dashed #999; border-radius: 12px;
+            background: #f5f5f5; color: #666;
+            font-size: 14px; cursor: pointer;
+        }
+        .skip-btn.show { display: block; }
+
         #result-screen { display: none; text-align: center; padding: 20px 0; }
         .result-circle {
             width: 140px; height: 140px; border-radius: 50%;
@@ -183,6 +191,7 @@
             </div>
         </div>
         <button class="next-btn" id="next-btn" onclick="nextQuestion()">次の問題 →</button>
+        <button class="skip-btn" id="skip-btn" onclick="skipQuestion()">⏭ この問題をスキップ（採点対象外）</button>
     </div>
 
     <div id="result-screen">
@@ -694,9 +703,11 @@ function showQuestion() {
         const nextBtn = document.getElementById('next-btn');
         nextBtn.textContent = currentIndex + 1 < total ? '次の問題 →' : '結果を見る';
         nextBtn.classList.add('show');
+        document.getElementById('skip-btn').classList.remove('show');
     } else {
         document.getElementById('explanation').classList.remove('show');
         document.getElementById('next-btn').classList.remove('show');
+        document.getElementById('skip-btn').classList.add('show');
     }
 
     document.getElementById('prev-btn').style.display = currentIndex > 0 ? 'block' : 'none';
@@ -719,7 +730,9 @@ function selectAnswer(selected, correctIndex) {
     answered = true;
     const q = currentQuestions[currentIndex];
     q._answered      = true;
+    q._skipped       = false;
     q._selectedIndex = selected;
+    document.getElementById('skip-btn').classList.remove('show');
 
     document.querySelectorAll('.option-btn').forEach((btn, i) => {
         btn.classList.add('disabled');
@@ -761,6 +774,17 @@ function prevQuestion() {
     }
 }
 
+function skipQuestion() {
+    const q = currentQuestions[currentIndex];
+    if (!q._answered) q._skipped = true;
+    currentIndex++;
+    if (currentIndex < currentQuestions.length) {
+        showQuestion();
+    } else {
+        showResult();
+    }
+}
+
 function goHomeFromQuiz() {
     if (confirm('最初に戻りますか？（進捗はリセットされます）')) {
         document.getElementById('quiz-screen').style.display  = 'none';
@@ -773,25 +797,32 @@ function showResult() {
     document.getElementById('quiz-screen').style.display   = 'none';
     document.getElementById('result-screen').style.display = 'block';
 
-    const total = currentQuestions.length;
-    const pct   = Math.round((score / total) * 100);
+    const skipped  = currentQuestions.filter(q => q._skipped && !q._answered).length;
+    const total    = currentQuestions.filter(q => q._answered).length;
+    const skipNote = skipped > 0 ? `（${skipped}問スキップ）` : '';
     const circle = document.getElementById('result-circle');
     document.getElementById('result-score').textContent = `${score}/${total}`;
 
-    if (pct >= 60) {
+    if (total === 0) {
+        circle.className = 'result-circle fail';
+        document.getElementById('result-message').textContent = '全問スキップしました';
+        document.getElementById('result-sub').textContent     = '回答した問題がありません';
+    } else if (Math.round((score / total) * 100) >= 60) {
+        const pct = Math.round((score / total) * 100);
         circle.className = 'result-circle pass';
         document.getElementById('result-message').textContent = '合格ライン達成！ 🎉';
-        document.getElementById('result-sub').textContent     = `正解率 ${pct}%　引き続き実力を磨きましょう`;
+        document.getElementById('result-sub').textContent     = `正解率 ${pct}%${skipNote}　引き続き実力を磨きましょう`;
     } else {
+        const pct = Math.round((score / total) * 100);
         circle.className = 'result-circle fail';
         document.getElementById('result-message').textContent = 'もう少し！ 💪';
-        document.getElementById('result-sub').textContent     = `正解率 ${pct}%　解説を確認して再挑戦しましょう`;
+        document.getElementById('result-sub').textContent     = `正解率 ${pct}%${skipNote}　解説を確認して再挑戦しましょう`;
     }
 
     const breakdown = document.getElementById('category-breakdown');
     if (sessionWrong.length > 0) {
         const catMap = {};
-        currentQuestions.forEach(q => { catMap[q.category] = catMap[q.category] || {correct:0,total:0}; catMap[q.category].total++; });
+        currentQuestions.filter(q => q._answered).forEach(q => { catMap[q.category] = catMap[q.category] || {correct:0,total:0}; catMap[q.category].total++; });
         sessionWrong.forEach(q   => { if (catMap[q.category]) catMap[q.category].correct--; });
         Object.keys(catMap).forEach(k => { catMap[k].correct = catMap[k].total + catMap[k].correct; });
 
